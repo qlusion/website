@@ -3,9 +3,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Repeating = ({ repeating, endRepeat }) => {
+const Repeating = ({ repeating }) => {
   const [showEndDatePicker, setShowEndDatePicker] = React.useState(repeating);
-  console.log(repeating);
 
   return (
     <>
@@ -29,7 +28,6 @@ const Repeating = ({ repeating, endRepeat }) => {
           required={true}
           type="datetime-local"
           name="endRepeat"
-          defaultValue={endRepeat}
           disabled={showEndDatePicker === "NEVER"}
         />
       </label>

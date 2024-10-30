@@ -27,10 +27,7 @@ model ClubEvent {
   location   String
   day        String
   time       String
-  start      DateTime?
-  end        DateTime?
   repeating  Frequency?
-  endRepeat  DateTime?
   picture    String
   admins     User[]
 }

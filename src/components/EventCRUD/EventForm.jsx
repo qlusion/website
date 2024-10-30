@@ -11,6 +11,7 @@ import Delete from "./Delete";
 import FileUpload from "@/components/FileUpload";
 import { updateCalendar } from "@/lib/calendar";
 import Repeating from "../Repeating";
+import Submit from "./Submit";
 
 const fields = [
   "name",
@@ -19,10 +20,7 @@ const fields = [
   "time",
   "location",
   "picture",
-  "start",
-  "end",
   "repeating",
-  "endRepeat",
 ];
 
 const getDataFromForm = async (formData) => {
@@ -32,31 +30,10 @@ const getDataFromForm = async (formData) => {
 
   for (const field of fields) {
     const value = formData.get(field);
-    if (field === "repeating" && value === "NEVER") {
-      data.endRepeat = new Date(formData.get("end"));
-    }
     if (!value && !data[field]) {
       throw new Error(`Missing required field: ${field}`);
     }
-    if (field === "start") {
-      const date = new Date(value);
-      if (date.getTime() < Date.now()) {
-        throw new Error("Start date must be in the future");
-      } else if (date.getTime() > new Date(formData.get("end")).getTime()) {
-        throw new Error("Start date must be before end date");
-      } else {
-        data[field] = date;
-      }
-    } else if (field === "end") {
-      const date = new Date(value);
-      if (date.getTime() < new Date(formData.get("start")).getTime()) {
-        throw new Error("End date must be after start date");
-      } else if (date.getTime() < Date.now()) {
-        throw new Error("End date must be in the future");
-      } else {
-        data[field] = date;
-      }
-    } else if (field === "picture" && value instanceof File) {
+    if (field === "picture" && value instanceof File) {
       if (value.size === 0 && !fileIsPicture(value)) {
         console.error("Invalid file type or size");
         data[field] = "";
@@ -120,10 +97,6 @@ const EventForm = async ({ event }) => {
       if (error.message.startsWith("Missing required field:")) {
         const message = "Failed to update event. " + error.message;
         redirect(`/my_events/?error=${message}`);
-      } else if (error.message.startsWith("Start date")) {
-        redirect(`/my_events/?error=Invalid start date`);
-      } else if (error.message.startsWith("End date")) {
-        redirect(`/my_events/?error=Invalid end date`);
       } else {
         redirect(`/my_events/?error=Unable to create event`);
       }
@@ -168,10 +141,6 @@ const EventForm = async ({ event }) => {
         console.error(error);
         const message = "Failed to update event. " + error.message;
         redirect(`/my_events/?error=${message}`);
-      } else if (error.message.startsWith("Start date")) {
-        redirect(`/my_events/?error=Invalid start date`);
-      } else if (error.message.startsWith("End date")) {
-        redirect(`/my_events/?error=Invalid end date`);
       } else {
         console.error(error);
         redirect(`/my_events/?error=Unable to update event`);
@@ -263,25 +232,9 @@ const EventForm = async ({ event }) => {
                 imageUrl={event?.picture}
               />
             );
-          } else if (field === "start" || field === "end") {
-            return (
-              <label key={field}>
-                {field === "endRepeat" ? "Repeat Until" : field}:
-                <input
-                  required={true}
-                  type="datetime-local"
-                  name={field}
-                  defaultValue={event?.[field]}
-                />
-              </label>
-            );
           } else if (field === "repeating") {
             return (
-              <Repeating
-                repeating={event?.repeating || "NEVER"}
-                endRepeat={event?.endRepeat}
-                key={field}
-              />
+              <Repeating repeating={event?.repeating || "NEVER"} key={field} />
             );
           } else if (field === "endRepeat") {
             return null;
@@ -302,7 +255,7 @@ const EventForm = async ({ event }) => {
         <div className="buttons">
           {event && <Delete onDelete={deleteEvent} />}
           <Cancel />
-          <button type="submit">{event ? "Update" : "Create"}</button>
+          <Submit>{event ? "Update" : "Create"}</Submit>
         </div>
         <p>
           Need to add an admin?{" "}
