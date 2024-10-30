@@ -37,7 +37,8 @@ a {
 
 input[type="email"],
 input[type="password"],
-input[type="text"] {
+input[type="text"],
+input[type="datetime-local"] {
   display: block;
   width: 100%;
   background-color: variables.$background;

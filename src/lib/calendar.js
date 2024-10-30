@@ -74,7 +74,7 @@ export async function generateCalendar() {
     },
   });
 
-  events.forEach((event) => {
+  events.forEach(async (event) => {
     const timeString = event.time.trim().toLowerCase();
     const { startTime, endTime } = convertTo24HourFormat(timeString);
     const dayMapping = {
@@ -97,15 +97,19 @@ export async function generateCalendar() {
     const currentYear = new Date().getFullYear();
     const jan1st = new Date(currentYear, 0, 1);
     const firstEventOffset = (dayMapping[event.day] - jan1st.getDay() + 7) % 7;
+
     const start = new Date(jan1st);
     start.setDate(jan1st.getDate() + firstEventOffset);
     start.setHours(startTime.hours, startTime.minutes, 0);
     if (start < new Date()) {
       start.setDate(start.getDate() + 7);
     }
+
     const end = new Date(start);
     end.setHours(endTime.hours, endTime.minutes, 0);
+
     const repeatUntil = new Date(currentYear, 11, 31);
+
     calendar.createEvent({
       start,
       end,
@@ -115,6 +119,16 @@ export async function generateCalendar() {
       repeating: {
         freq: ICalEventRepeatingFreq.WEEKLY,
         until: repeatUntil,
+      },
+    });
+
+    await prisma.clubEvent.update({
+      where: { id: event.id },
+      data: {
+        start,
+        end,
+        repeating: "WEEKLY",
+        endRepeat: repeatUntil,
       },
     });
   });

@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 
 const EditClub = async ({ params }) => {
+  const data = await params;
   const { user } = await userSignedIn(["admin", "clubAdmin"]);
 
   if (!user) {
@@ -14,7 +15,7 @@ const EditClub = async ({ params }) => {
 
   const event = await prisma.ClubEvent.findUnique({
     where: {
-      id: params.clubID,
+      id: data.clubID,
     },
     include: {
       admins: true,

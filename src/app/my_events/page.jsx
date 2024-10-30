@@ -8,6 +8,7 @@ import Error from "@/components/Toasts/Error";
 import Success from "@/components/Toasts/Success";
 
 export default async function UserClubs({ searchParams }) {
+  const message = await searchParams;
   const data = [];
   const { user } = await userSignedIn(["admin", "clubAdmin"]);
 
@@ -27,8 +28,8 @@ export default async function UserClubs({ searchParams }) {
           Create New Event
         </Link>
       </h2>
-      <Success message={searchParams.success} />
-      <Error message={searchParams.error} />
+      <Success message={message.success} />
+      <Error message={message.error} />
       <section className="content">
         <Events events={data} />
       </section>
