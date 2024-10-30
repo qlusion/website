@@ -27,8 +27,10 @@ model ClubEvent {
   location   String
   day        String
   time       String
-  repeating  Frequency?
   picture    String
+  startDate  String?
+  repeating  Frequency?
+  endDate    String?
   admins     User[]
 }
 
@@ -50,7 +52,7 @@ enum Role {
 }
 
 enum Frequency {
-    NEVER
-    WEEKLY
-    MONTHLY
+  NEVER
+  WEEKLY
+  MONTHLY
 }

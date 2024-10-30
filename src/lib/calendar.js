@@ -94,43 +94,39 @@ export async function generateCalendar() {
       return;
     }
 
-    const currentYear = new Date().getFullYear();
-    const jan1st = new Date(currentYear, 0, 1);
-    const firstEventOffset = (dayMapping[event.day] - jan1st.getDay() + 7) % 7;
-
-    const start = new Date(jan1st);
-    start.setDate(jan1st.getDate() + firstEventOffset);
+    const start = new Date(event.startDate);
     start.setHours(startTime.hours, startTime.minutes, 0);
-    if (start < new Date()) {
-      start.setDate(start.getDate() + 7);
-    }
 
     const end = new Date(start);
     end.setHours(endTime.hours, endTime.minutes, 0);
 
-    const repeatUntil = new Date(currentYear, 11, 31);
+    const repeatUntil = new Date(event.endDate);
 
-    calendar.createEvent({
+    const eventDetails = {
       start,
       end,
       summary: event.name,
       location: event.location,
       description: `Category: ${event.category.name}`,
-      repeating: {
-        freq: ICalEventRepeatingFreq.WEEKLY,
-        until: repeatUntil,
-      },
-    });
+    };
 
-    await prisma.clubEvent.update({
-      where: { id: event.id },
-      data: {
-        start,
-        end,
-        repeating: "WEEKLY",
-        endRepeat: repeatUntil,
-      },
-    });
+    if (event.repeating !== "NEVER") {
+      eventDetails.repeating = {
+        freq: ICalEventRepeatingFreq[event.repeating],
+        until: repeatUntil,
+      };
+    }
+
+    calendar.createEvent(eventDetails);
+
+    // await prisma.clubEvent.update({
+    //   where: { id: event.id },
+    //   data: {
+    //     startDate: start.toISOString().split("T")[0],
+    //     repeating: event.repeating || "WEEKLY",
+    //     endDate: repeatUntil.toISOString().split("T")[0],
+    //   },
+    // });
   });
 
   return calendar;

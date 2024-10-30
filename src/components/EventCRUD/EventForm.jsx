@@ -20,6 +20,7 @@ const fields = [
   "time",
   "location",
   "picture",
+  "startDate",
   "repeating",
 ];
 
@@ -47,8 +48,14 @@ const getDataFromForm = async (formData) => {
       }
     } else if (field === "categoryId") {
       data[field] = value || "cm1quiavf0000k693uihmt6w0";
-    } else if (field !== "endRepeat") {
+    } else {
       data[field] = value || "";
+    }
+    if (field === "repeating" && value !== "NEVER") {
+      const endDate = formData.get("endDate");
+      if (endDate) {
+        data.endDate = endDate;
+      }
     }
   }
 
@@ -232,12 +239,28 @@ const EventForm = async ({ event }) => {
                 imageUrl={event?.picture}
               />
             );
+          } else if (field === "startDate") {
+            return (
+              <label key={field}>
+                Start Date
+                <input
+                  type="date"
+                  name="startDate"
+                  defaultValue={
+                    event?.startDate || new Date().toISOString().split("T")[0]
+                  }
+                  required={true}
+                />
+              </label>
+            );
           } else if (field === "repeating") {
             return (
-              <Repeating repeating={event?.repeating || "NEVER"} key={field} />
+              <Repeating
+                repeating={event?.repeating || "WEEKLY"}
+                endDate={event?.endDate}
+                key={field}
+              />
             );
-          } else if (field === "endRepeat") {
-            return null;
           } else {
             return (
               <label key={field}>

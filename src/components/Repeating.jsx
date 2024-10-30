@@ -3,15 +3,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Repeating = ({ repeating }) => {
-  const [showEndDatePicker, setShowEndDatePicker] = React.useState(repeating);
+const Repeating = ({ repeating, endDate }) => {
+  const [showEnd, setShowEnd] = React.useState(repeating !== "NEVER");
 
   return (
     <>
       <label>
         Repeating:
         <select
-          onChange={(e) => setShowEndDatePicker(e.target.value)}
+          onChange={(e) => setShowEnd(e.target.value !== "NEVER")}
           name="repeating"
           defaultValue={repeating}
         >
@@ -20,15 +20,18 @@ const Repeating = ({ repeating }) => {
           <option value="MONTHLY">Monthly</option>
         </select>
       </label>
-      <label
-        style={{ display: showEndDatePicker === "NEVER" ? "none" : "block" }}
-      >
-        Repeat Until:
+      <label style={{ display: showEnd ? "block" : "none" }}>
+        End Date:
         <input
-          required={true}
-          type="datetime-local"
-          name="endRepeat"
-          disabled={showEndDatePicker === "NEVER"}
+          type="date"
+          name="endDate"
+          defaultValue={
+            endDate ||
+            new Date(new Date().getFullYear(), 11, 31)
+              .toISOString()
+              .split("T")[0]
+          }
+          required={showEnd}
         />
       </label>
     </>
@@ -37,7 +40,7 @@ const Repeating = ({ repeating }) => {
 
 Repeating.propTypes = {
   repeating: PropTypes.string,
-  endRepeat: PropTypes.string,
+  endDate: PropTypes.string,
 };
 
 export default Repeating;
