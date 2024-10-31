@@ -77,15 +77,6 @@ export async function generateCalendar() {
   events.forEach(async (event) => {
     const timeString = event.time.trim().toLowerCase();
     const { startTime, endTime } = convertTo24HourFormat(timeString);
-    const dayMapping = {
-      Sunday: 0,
-      Monday: 1,
-      Tuesday: 2,
-      Wednesday: 3,
-      Thursday: 4,
-      Friday: 5,
-      Saturday: 6,
-    };
 
     if (startTime === null || endTime === null) {
       console.log(

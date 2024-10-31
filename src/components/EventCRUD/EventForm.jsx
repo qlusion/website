@@ -30,12 +30,16 @@ const getDataFromForm = async (formData) => {
 
   const data = {};
 
-  for (const field of fields) {
-    const value = formData.get(field);
-    if (!value && !data[field]) {
+  const throwIfMissingField = (value, field) => {
+    if (value === undefined || value === null) {
       throw new Error(`Missing required field: ${field}`);
     }
+  };
+
+  for (const field of fields) {
+    const value = formData.get(field);
     if (field === "picture" && value instanceof File) {
+      throwIfMissingField(value, field);
       if (value.size === 0 && !fileIsPicture(value)) {
         console.error("Invalid file type or size");
         data[field] = "";
@@ -48,35 +52,34 @@ const getDataFromForm = async (formData) => {
         data[field] = blob.url;
       }
     } else if (field === "categoryId") {
+      throwIfMissingField(value, field);
       data[field] = value || "cm1quiavf0000k693uihmt6w0";
     } else if (field === "time") {
-      const startHour = formData.get("startHour");
-      const startMinute = formData.get("startMinute");
-      const startPeriod = formData.get("startPeriod");
-      const endHour = formData.get("endHour");
-      const endMinute = formData.get("endMinute");
-      const endPeriod = formData.get("endPeriod");
+      const fields = [
+        "startHour",
+        "startMinute",
+        "startPeriod",
+        "endHour",
+        "endMinute",
+        "endPeriod",
+      ];
 
-      data.startHour = startHour;
-      data.startMinute = startMinute;
-      data.startPeriod = startPeriod;
-
-      data.endHour = endHour;
-      data.endMinute = endMinute;
-      data.endPeriod = endPeriod;
+      fields.forEach((field) => {
+        const value = formData.get(field);
+        throwIfMissingField(value, field);
+        data[field] = field.includes("Period") ? value : parseInt(value, 10);
+      });
 
       data[field] =
-        `${startHour}:${startMinute} ${startPeriod} - ${endHour}:${endMinute} ${endPeriod}`;
+        `${data.startHour.toString().padStart(2, "0")}:${data.startMinute.toString().padStart(2, "0")} ${data.startPeriod} - ${data.endHour.toString().padStart(2, "0")}:${data.endMinute.toString().padStart(2, "0")} ${data.endPeriod}`;
     } else {
+      throwIfMissingField(value, field);
       data[field] = value || "";
     }
     if (field === "repeating" && value !== "NEVER") {
       const endDate = formData.get("endDate");
-      if (endDate) {
-        data.endDate = endDate;
-      } else {
-        throw new Error("Missing required field: End Date");
-      }
+      throwIfMissingField(endDate, "End Date");
+      data.endDate = endDate;
     }
   }
 

@@ -32,10 +32,10 @@ model ClubEvent {
   day         String
   time        String
   startHour   Int?
-  startMin    Int?
+  startMinute Int?
   startPeriod AMPM?
   endHour     Int?
-  endMin      Int?
+  endMinute   Int?
   endPeriod   AMPM?
   picture     String
   startDate   String?
