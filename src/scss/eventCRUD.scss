@@ -40,5 +40,23 @@
         min-width: 100%;
       }
     }
+
+    .time {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-column: span 2;
+      grid-gap: 1rem 3rem;
+
+      @media screen and (max-width: 708px) {
+        grid-template-columns: 1fr;
+        grid-column: span 1;
+      }
+
+      .time-parts {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 2rem;
+      }
+    }
   }
 }

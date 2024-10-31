@@ -44,12 +44,12 @@ export default async function Header() {
       {session && (
         <p>
           Hello, {user?.name}!{" "}
-          {user.clubs.length > 0 ? (
+          {user?.clubs.length > 0 ? (
             <>
               You&apos;re admin for {user.clubs.length} event(s).{" "}
               <Link href={`/my_events`}>Click here</Link> to manage them.
             </>
-          ) : user.role === "admin" || user.role === "clubAdmin" ? (
+          ) : user?.role === "admin" || user?.role === "clubAdmin" ? (
             <>
               <Link href="/my_events/new">Create an event</Link> to get started.
             </>

@@ -7,8 +7,12 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  // PROD
+  // url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  // DEV
+  url       = env("DATABASE_URL") // uses connection pooling
+  directUrl = env("DATABASE_URL") // uses a direct connection
 }
 
 model User {
@@ -20,18 +24,24 @@ model User {
 }
 
 model ClubEvent {
-  id         String       @id @default(cuid())
-  categoryId String
-  category   ClubCategory @relation(fields: [categoryId], references: [id])
-  name       String
-  location   String
-  day        String
-  time       String
-  picture    String
-  startDate  String?
-  repeating  Frequency?
-  endDate    String?
-  admins     User[]
+  id          String       @id @default(cuid())
+  categoryId  String
+  category    ClubCategory @relation(fields: [categoryId], references: [id])
+  name        String
+  location    String
+  day         String
+  time        String
+  startHour   Int?
+  startMin    Int?
+  startPeriod AMPM?
+  endHour     Int?
+  endMin      Int?
+  endPeriod   AMPM?
+  picture     String
+  startDate   String?
+  repeating   Frequency?
+  endDate     String?
+  admins      User[]
 }
 
 model ClubCategory {
@@ -55,4 +65,9 @@ enum Frequency {
   NEVER
   WEEKLY
   MONTHLY
+}
+
+enum AMPM {
+  AM
+  PM
 }

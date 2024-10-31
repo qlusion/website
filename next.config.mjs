@@ -9,6 +9,16 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    turbo: {
+      rules: {
+        "*.scss": {
+          loaders: ["sass-loader"],
+          as: "*.css",
+        },
+      },
+    },
+  },
 };
 
 export default nextConfig;

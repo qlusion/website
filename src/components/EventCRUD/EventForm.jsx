@@ -12,6 +12,7 @@ import FileUpload from "@/components/FileUpload";
 import { updateCalendar } from "@/lib/calendar";
 import Repeating from "../Repeating";
 import Submit from "./Submit";
+import TimeParts from "./TimeParts";
 
 const fields = [
   "name",
@@ -48,6 +49,24 @@ const getDataFromForm = async (formData) => {
       }
     } else if (field === "categoryId") {
       data[field] = value || "cm1quiavf0000k693uihmt6w0";
+    } else if (field === "time") {
+      const startHour = formData.get("startHour");
+      const startMinute = formData.get("startMinute");
+      const startPeriod = formData.get("startPeriod");
+      const endHour = formData.get("endHour");
+      const endMinute = formData.get("endMinute");
+      const endPeriod = formData.get("endPeriod");
+
+      data.startHour = startHour;
+      data.startMinute = startMinute;
+      data.startPeriod = startPeriod;
+
+      data.endHour = endHour;
+      data.endMinute = endMinute;
+      data.endPeriod = endPeriod;
+
+      data[field] =
+        `${startHour}:${startMinute} ${startPeriod} - ${endHour}:${endMinute} ${endPeriod}`;
     } else {
       data[field] = value || "";
     }
@@ -55,6 +74,8 @@ const getDataFromForm = async (formData) => {
       const endDate = formData.get("endDate");
       if (endDate) {
         data.endDate = endDate;
+      } else {
+        throw new Error("Missing required field: End Date");
       }
     }
   }
@@ -191,88 +212,96 @@ const EventForm = async ({ event }) => {
       <h2>{event ? "Edit" : "New"} Event</h2>
       <form className="EventCRUD" action={event ? updateEvent : saveNewEvent}>
         {fields.map((field) => {
-          if (field === "categoryId") {
-            return (
-              <label key={field}>
-                Category
-                <select
-                  required={true}
-                  name="categoryId"
-                  defaultValue={event?.categoryId}
-                >
-                  <option value="" hidden>
-                    Select a category
-                  </option>
-                  {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
+          switch (field) {
+            case "categoryId":
+              return (
+                <label key={field}>
+                  Category:
+                  <select
+                    required={true}
+                    name="categoryId"
+                    defaultValue={event?.categoryId}
+                  >
+                    <option value="" hidden>
+                      Select a category
                     </option>
-                  ))}
-                </select>
-              </label>
-            );
-          } else if (field === "day") {
-            return (
-              <label key={field}>
-                Day
-                <select required={true} name="day" defaultValue={event?.day}>
-                  <option value="" hidden>
-                    Select a day
-                  </option>
-                  <option value="Monday">Monday</option>
-                  <option value="Tuesday">Tuesday</option>
-                  <option value="Wednesday">Wednesday</option>
-                  <option value="Thursday">Thursday</option>
-                  <option value="Friday">Friday</option>
-                  <option value="Saturday">Saturday</option>
-                  <option value="Sunday">Sunday</option>
-                </select>
-              </label>
-            );
-          } else if (field === "picture") {
-            return (
-              <FileUpload
-                key={field}
-                name={field}
-                title="Picture"
-                accept="image/*"
-                imageUrl={event?.picture}
-              />
-            );
-          } else if (field === "startDate") {
-            return (
-              <label key={field}>
-                Start Date
-                <input
-                  type="date"
-                  name="startDate"
-                  defaultValue={
-                    event?.startDate || new Date().toISOString().split("T")[0]
-                  }
-                  required={true}
-                />
-              </label>
-            );
-          } else if (field === "repeating") {
-            return (
-              <Repeating
-                repeating={event?.repeating || "WEEKLY"}
-                endDate={event?.endDate}
-                key={field}
-              />
-            );
-          } else {
-            return (
-              <label key={field}>
-                {field === "clubName" ? "Club/Event Name" : field}:
-                <input
-                  required={true}
-                  type="text"
+                    {categories.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              );
+            case "day":
+              return (
+                <label key={field}>
+                  Day:
+                  <select required={true} name="day" defaultValue={event?.day}>
+                    <option value="" hidden>
+                      Select a day
+                    </option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                  </select>
+                </label>
+              );
+            case "time":
+              return (
+                <div key={field} className="time">
+                  <TimeParts event={event} type={"start"} title="Time Start:" />
+                  <TimeParts event={event} type={"end"} title="Time End:" />
+                </div>
+              );
+            case "picture":
+              return (
+                <FileUpload
+                  key={field}
                   name={field}
-                  defaultValue={event?.[field]}
+                  title="Picture:"
+                  accept="image/*"
+                  imageUrl={event?.picture}
                 />
-              </label>
-            );
+              );
+            case "startDate":
+              return (
+                <label key={field}>
+                  Start Date:
+                  <input
+                    type="date"
+                    name="startDate"
+                    defaultValue={
+                      event?.startDate || new Date().toISOString().split("T")[0]
+                    }
+                    required={true}
+                  />
+                </label>
+              );
+            case "repeating":
+              return (
+                <Repeating
+                  repeating={event?.repeating || "WEEKLY"}
+                  endDate={event?.endDate}
+                  key={field}
+                />
+              );
+            default:
+              return (
+                <label key={field}>
+                  {field === "clubName" ? "Club/Event Name" : field}:
+                  <input
+                    required={true}
+                    type="text"
+                    name={field}
+                    defaultValue={event?.[field]}
+                  />
+                </label>
+              );
           }
         })}
         <div className="buttons">
