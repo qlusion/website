@@ -3,30 +3,30 @@ import Google from "next-auth/providers/google";
 import { prisma } from "@/lib/prisma";
 
 const newUser = async (profile) => {
-  if (profile.email.endsWith("@scu.edu")) {
-    try {
-      const user = await prisma.user.findUnique({
-        where: { email: profile.email },
-      });
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email: profile.email },
+    });
 
-      if (!user) {
-        await prisma.user.create({
-          data: {
-            email: profile.email,
-            name: profile.name,
-            image: profile.image,
-          },
-        });
+    if (!user) {
+      if (!profile.email.endsWith("@scu.edu")) {
+        throw new Error("Login from unauthorized domain");
       }
 
-      return true;
-    } catch (error) {
-      console.error(error);
-      return false;
+      await prisma.user.create({
+        data: {
+          email: profile.email,
+          name: profile.name,
+          image: profile.image,
+        },
+      });
     }
+
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
   }
-  console.error("Login from unauthorized email: ", profile.email);
-  return false;
 };
 
 export const { handlers, signIn, signOut, auth } = NextAuth({

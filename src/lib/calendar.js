@@ -98,7 +98,7 @@ export async function generateCalendar() {
       end,
       summary: event.name,
       location: event.location,
-      description: `Category: ${event.category.name}`,
+      description: `SCU Club Category: ${event.category.name}. Powered by Qlusion.`,
     };
 
     if (event.repeating !== "NEVER") {
