@@ -14,6 +14,7 @@
       cursor: pointer;
       font-family: "Open Sans", sans-serif;
       font-weight: 600;
+      color: variables.$background;
       background-color: variables.$background;
       background-image: linear-gradient(to bottom right,
           rgba(0, 0, 0, 0.0375),
@@ -29,6 +30,50 @@
       padding: 4px 8px;
       border-radius: 6px;
       text-align: center;
+
+      &:nth-child(1) {
+        background-color: variables.$text;
+      }
+
+      &:nth-child(2) {
+        background-color: variables.$red;
+      }
+
+      &:nth-child(3) {
+        background-color: variables.$flamingo;
+      }
+
+      &:nth-child(4) {
+        background-color: variables.$green;
+      }
+
+      &:nth-child(5) {
+        background-color: variables.$pink;
+      }
+
+      &:nth-child(6) {
+        background-color: variables.$purple;
+      }
+
+      &:nth-child(7) {
+        background-color: variables.$orange;
+      }
+
+      &:nth-child(8) {
+        background-color: variables.$teal;
+      }
+
+      &:nth-child(9) {
+        background-color: variables.$sky;
+      }
+
+      &:nth-child(10) {
+        background-color: variables.$yellow;
+      }
+
+      &:nth-child(11) {
+        background-color: variables.$rosewater;
+      }
 
       &.active {
         opacity: 1;

@@ -28,11 +28,14 @@ export default function MenuButton(props) {
 
   useEffect(() => {
     const disableScroll = filtersMenu && window.innerWidth < 800;
+    const eventsElement = document.querySelector("main .content .events");
 
     if (disableScroll) {
       document.body.style.overflow = "hidden";
       document.body.style.height = "100vh";
-      document.querySelector("main .content .events").style.display = "none";
+      if (eventsElement) {
+        eventsElement.style.display = "none";
+      }
       setFiltersMenu(true);
     }
 
@@ -40,7 +43,9 @@ export default function MenuButton(props) {
       if (disableScroll) {
         document.body.style.overflow = "auto";
         document.body.style.height = "auto";
-        document.querySelector("main .content .events").style.display = "grid";
+        if (eventsElement) {
+          eventsElement.style.display = "grid";
+        }
         setFiltersMenu(false);
       }
     };

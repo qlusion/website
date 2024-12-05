@@ -1,0 +1,39 @@
+@use "variables";
+
+footer {
+  margin-top: 64px;
+  padding: 16px 32px;
+  background-color: variables.$text;
+  color: variables.$background;
+  display: grid;
+  gap: 20px;
+  border-radius: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+  section {
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    ul {
+      li {
+        margin-bottom: 2px;
+      }
+    }
+
+    &:first-of-type {
+      display: flex;
+      align-items: center;
+
+      p {
+        margin-left: 10px;
+        font-size: 1.4rem;
+        font-weight: 700;
+      }
+    }
+
+    &:last-of-type {
+      text-align: right;
+    }
+  }
+}
