@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&family=Raleway:wght@100..900&display=swap");
+@import "variables.css";
+@import "resets.css";
+@import "globals.css";
+@import "header.css";
+@import "main.css";
+@import "filters.css";
+@import "categories.css";
+@import "eventCRUD.css";
+@import "toasts.css";
+@import "google.css";
+@import "footer.css";

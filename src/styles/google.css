@@ -1,0 +1,22 @@
+#google_translate_element {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  margin-top: 30px;
+}
+
+#google_translate_element div {
+  color: transparent;
+}
+
+#google_translate_element div span {
+  display: none;
+}
+
+#google_translate_element div select {
+  /*restore default select styling*/
+  font-size: 13px;
+  border-radius: 5px;
+  box-shadow: none;
+}

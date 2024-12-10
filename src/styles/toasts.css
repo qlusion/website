@@ -1,0 +1,29 @@
+.toast {
+  text-align: center;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 1rem 0;
+}
+
+.toast.error {
+  background: var(--red);
+}
+
+.toast.error:hover {
+  background: #e95b68;
+}
+
+.toast.success {
+  background: var(--primary);
+}
+
+.toast.success:hover {
+  background: #8b9cfd;
+}
+
+.toast .close {
+  margin-left: 0.25rem;
+}

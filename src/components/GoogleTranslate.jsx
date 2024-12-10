@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
+import PropTypes from "prop-types";
 
-const GoogleTranslate = () => {
+const GoogleTranslate = ({ children }) => {
   React.useEffect(() => {
     const addGoogleTranslateScript = () => {
       const script = document.createElement("script");
@@ -16,9 +17,6 @@ const GoogleTranslate = () => {
       new window.google.translate.TranslateElement(
         {
           pageLanguage: "en",
-          includedLanguages:
-            "en,es,fr,de,ja,ko,zh,vi,ar,tl,ru,pt,it,pl,hi,ur,fa",
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
         },
         "google_translate_element",
       );
@@ -34,7 +32,11 @@ const GoogleTranslate = () => {
     };
   }, []);
 
-  return <div id="google_translate_element">Translate the page:</div>;
+  return <label id="google_translate_element">{children}</label>;
+};
+
+GoogleTranslate.propTypes = {
+  children: PropTypes.node,
 };
 
 export default GoogleTranslate;

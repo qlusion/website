@@ -1,0 +1,63 @@
+.EventCRUD {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.EventCRUD form {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 1rem 3rem;
+}
+
+.EventCRUD form label {
+  display: block;
+  text-transform: capitalize;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.EventCRUD form label input,
+.EventCRUD form label select {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  min-width: 100%;
+}
+
+.EventCRUD form label select {
+  height: 50px;
+}
+
+.EventCRUD form .buttons {
+  margin-top: 1rem;
+  padding-top: 2rem;
+  grid-column: -1;
+  border-top: 1px solid #ccc;
+  display: grid;
+  grid-gap: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.EventCRUD form .buttons button,
+.EventCRUD form .buttons a {
+  min-width: 100%;
+}
+
+.EventCRUD form .time {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-column: span 2;
+  grid-gap: 1rem 3rem;
+}
+
+@media screen and (max-width: 708px) {
+  .EventCRUD form .time {
+    grid-template-columns: 1fr;
+    grid-column: span 1;
+  }
+}
+
+.EventCRUD form .time .time-parts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+}

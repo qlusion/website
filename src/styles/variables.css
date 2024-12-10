@@ -1,0 +1,30 @@
+:root {
+  --background: #f2f1f6;
+  --text: #2d402b;
+  --grey: #9ca0b0;
+  --primary: var(--green);
+  --blue: #77affc;
+  --red: #ef908c;
+  --yellow: #e8f987;
+  --green: #c1e1c1;
+  --pink: #ed94d4;
+  --purple: #d59bff;
+  --orange: #f8d08b;
+  --teal: #baf8c7;
+  --sky: #aacefe;
+  --flamingo: #f3c1e7;
+  --rosewater: #f6c5c1;
+
+  --coverflow-ligth: linear-gradient(to bottom right,
+      rgba(193, 225, 193, 0.0375),
+      rgba(0, 0, 0, 0));
+  --coverflow-full: linear-gradient(to bottom right,
+      rgba(193, 225, 193, 0.4),
+      rgba(30, 245, 102, 0.36));
+  --coverflow-dark: linear-gradient(to bottom right,
+      rgba(193, 225, 193, 0.6),
+      rgba(30, 245, 102, 0.56));
+  --coverflow-darker: linear-gradient(to bottom right,
+      rgba(193, 225, 193, 0.8),
+      rgba(30, 245, 102, 0.76));
+}

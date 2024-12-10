@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import FooterLinks from "./FooterLinks";
+import GoogleTranslate from "@/components/GoogleTranslate";
 
 const Footer = () => {
   return (
@@ -12,7 +13,12 @@ const Footer = () => {
           width={116 * 0.75}
           height={154 * 0.75}
         />
-        <p>Powered by Qlusion</p>
+        <div>
+          <p>
+            <span>SCU Events</span>
+            Powered by Qlusion
+          </p>
+        </div>
       </section>
       <section>
         <h2>Contact Information</h2>
@@ -36,6 +42,9 @@ const Footer = () => {
             <a href="tel:+14085544000">(408) 554-4000</a>
           </li>
         </ul>
+        <GoogleTranslate>
+          <h2>Translate this page:</h2>
+        </GoogleTranslate>
       </section>
       <FooterLinks />
     </footer>

@@ -9,8 +9,7 @@ import { AppProvider } from "@/lib/Providers";
 import { auth } from "@/lib/auth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import GoogleTranslate from "@/components/GoogleTranslate";
-import "@/scss/index.scss";
+import "@/styles/index.css";
 
 export const metadata = {
   title: "Qlusion",
@@ -26,7 +25,6 @@ export default async function RootLayout({ children }) {
         <div id="root" className="container">
           <AppProvider session={session}>
             <Header />
-            <GoogleTranslate />
             {children}
             <Footer />
           </AppProvider>

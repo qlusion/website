@@ -10,5 +10,14 @@ export default async function Home() {
     },
   });
 
-  return <HomePage data={data} />;
+  return (
+    <main>
+      <section className="hero">
+        <h2>
+          Stay Connected With Qlusion <span>Community Platform at SCU</span>
+        </h2>
+      </section>
+      <HomePage data={data} />
+    </main>
+  );
 }
