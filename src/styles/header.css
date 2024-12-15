@@ -96,7 +96,7 @@ header h1 svg {
 }
 
 header p {
-  grid-column: -1 / 1;
+  grid-column: 1 / -1;
   text-align: right;
 }
 
