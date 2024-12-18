@@ -6,7 +6,6 @@ main .hero {
   background: url("/img/old-hero.webp") no-repeat center center / cover;
   color: var(--background);
   border-radius: 5px;
-  min-height: 50dvh;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -22,7 +21,6 @@ main .hero::before {
   right: 0;
   bottom: 0;
   background: rgba(76, 79, 105, 0.7);
-  /* backdrop-filter: blur(5px); */
   border-radius: 5px;
 }
 
@@ -34,6 +32,7 @@ main .hero h2 {
   line-height: 1.5;
   font-size: 2.3rem;
   padding: 0 20px;
+  margin: 13.5vw 0;
 }
 
 main .hero h2 span {

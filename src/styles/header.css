@@ -80,9 +80,17 @@ header .menu:hover {
   }
 }
 
+header .menu .text {
+  display: none;
+}
+
 @media screen and (min-width: 600px) {
   header .menu svg {
     margin-right: 5px;
+  }
+
+  header .menu .text {
+    display: inline-block;
   }
 }
 

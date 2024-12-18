@@ -9,15 +9,8 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    turbo: {
-      rules: {
-        "*.scss": {
-          loaders: ["sass-loader"],
-          as: "*.css",
-        },
-      },
-    },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 

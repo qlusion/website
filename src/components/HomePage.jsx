@@ -22,6 +22,7 @@ export default function Main({ data }) {
     year: "numeric",
     month: "long",
     day: "2-digit",
+    timeZone: "America/Los_Angeles",
   });
 
   const toggleCategory = (category) => {

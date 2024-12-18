@@ -15,7 +15,7 @@ const AuthButton = () => {
     return (
       <span className="menu" onClick={() => signOut()}>
         <FontAwesomeIcon icon={faRightFromBracket} fixedWidth />
-        Sign out
+        <span className="text">Sign out</span>
       </span>
     );
   }
@@ -23,7 +23,7 @@ const AuthButton = () => {
   return (
     <span className="menu" onClick={() => signIn("google")}>
       <FontAwesomeIcon icon={faRightToBracket} fixedWidth />
-      Sign in
+      <span className="text">Sign in</span>
     </span>
   );
 };

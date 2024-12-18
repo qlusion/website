@@ -1,0 +1,45 @@
+services:
+  next:
+    build: .
+    image: qlusion
+    restart: always
+    volumes:
+      - ./src:/app/src:ro,Z
+      - ./public:/app/public:ro,Z
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/qlusion
+    command: npm run dev
+    pull_policy: never
+    depends_on:
+      - postgres
+    network_mode: host
+
+  prisma:
+    image: qlusion
+    restart: always
+    volumes:
+      - ./prisma:/app/prisma:ro,Z
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/qlusion
+    command: sh -c "npx prisma db push && npx prisma studio -b none"
+    pull_policy: never
+    network_mode: host
+    depends_on:
+      - next
+
+  postgres:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data:rw,Z
+
+volumes:
+  db_data:
