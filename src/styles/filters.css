@@ -21,6 +21,12 @@
     position: static;
     display: block;
   }
+
+  .filters.container {
+    box-shadow:
+      inset 2px 2px 10px #dce0e8,
+      inset -2px -2px 10px #e6e9ef;
+  }
 }
 
 .filters h3 {
