@@ -13,7 +13,7 @@
   box-shadow: none;
 }
 
-@media screen and (min-width: 534px) {
+@media screen and (min-width: 536px) {
   .filters {
     top: calc(24px + 1.5 * 38px);
   }
