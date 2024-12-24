@@ -51,9 +51,50 @@ main .hero h2 span {
   }
 }
 
+main section.container {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 1rem;
+  margin: 20px auto 10px;
+}
+
+@media screen and (min-width: 600px) {
+  main section.container {
+    grid-template-columns: repeat(2, auto);
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+main section.container h2 {
+  font-size: 1.2rem;
+  text-transform: initial;
+  margin: 0;
+}
+
+main section.container nav {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  z-index: 0;
+}
+
+main section.container nav .menu.first {
+  margin-right: 15px;
+}
+
+main section.container nav svg {
+  margin-right: 5px;
+}
+
+@media screen and (max-width: 600px) {
+  main section.container {
+    place-items: center;
+  }
+}
+
 main h2 {
   font-size: 36px;
-  margin-bottom: 35px;
+  margin: 30px 0;
 }
 
 main h2 span {

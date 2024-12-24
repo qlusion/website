@@ -10,6 +10,8 @@ export const AppProvider = ({ session, children }) => {
   const [date, setDate] = useState(new Date());
   const [filtersMenu, setFiltersMenu] = useState(false);
   const [mainContent, setMainContent] = useState("events");
+  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [audience, setAudience] = useState("all");
 
   return (
     <SessionProvider session={session}>
@@ -22,6 +24,10 @@ export const AppProvider = ({ session, children }) => {
           mainContent,
           setMainContent,
           session,
+          filteredEvents,
+          setFilteredEvents,
+          audience,
+          setAudience,
         }}
       >
         {children}

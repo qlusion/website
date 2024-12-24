@@ -33,9 +33,11 @@ export default function MenuButton(props) {
     if (disableScroll) {
       document.body.style.overflow = "hidden";
       document.body.style.height = "100vh";
+      scrollTo(0, 0);
       if (eventsElement) {
         eventsElement.style.display = "none";
       }
+      setMainContent("events");
       setFiltersMenu(true);
     }
 
@@ -49,7 +51,7 @@ export default function MenuButton(props) {
         setFiltersMenu(false);
       }
     };
-  }, [filtersMenu, setFiltersMenu]);
+  }, [filtersMenu]);
 
   const router = useRouter();
 

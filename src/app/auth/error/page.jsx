@@ -1,7 +1,7 @@
-import React from "react";
+import { redirect } from "next/navigation";
 
 const LoginError = () => {
-  return <div>LoginError</div>;
+  redirect("/");
 };
 
 export default LoginError;

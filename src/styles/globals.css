@@ -105,7 +105,7 @@ a.button {
   width: 100%;
   max-width: 310px;
   cursor: pointer;
-  color: white;
+  color: var(--text);
   background-color: var(--primary);
   background-image: var(--coverflow-full);
   font-weight: 700;

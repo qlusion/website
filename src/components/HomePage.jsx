@@ -7,15 +7,30 @@ import FiltersMenu from "./FiltersMenu";
 import Events from "./Events";
 
 export default function Main({ data }) {
-  const { date, mainContent, filtersMenu } = useContext(AppContext);
-  const [events, setEvents] = useState(data);
+  const {
+    date,
+    mainContent,
+    filtersMenu,
+    filteredEvents,
+    setFilteredEvents,
+    audience,
+  } = useContext(AppContext);
+  const [allEvents, setAllEvents] = useState(data);
   const [categories, setCategories] = useState(["All"]);
   const dayOfWeek = date.toLocaleString("en-US", { weekday: "long" });
 
   useEffect(() => {
-    console.log(date, data);
-    setEvents(data.filter((event) => event.day === dayOfWeek));
-  }, [date, dayOfWeek, data]);
+    const currentEvents = data.filter(
+      (event) =>
+        event.day === dayOfWeek &&
+        (audience === "all" ? true : event.audience === audience) &&
+        (categories.includes("All")
+          ? true
+          : categories.includes(event.category.name)),
+    );
+    setAllEvents(currentEvents);
+    setFilteredEvents(currentEvents);
+  }, [date, dayOfWeek, data, audience, categories]);
 
   const isToday = date.toDateString() === new Date().toDateString();
   const formattedDate = date.toLocaleDateString("en-US", {
@@ -28,6 +43,7 @@ export default function Main({ data }) {
   const toggleCategory = (category) => {
     if (category === "All") {
       setCategories(["All"]);
+      setFilteredEvents(allEvents);
     } else {
       const updatedCategories = categories.includes("All")
         ? [category]
@@ -38,14 +54,13 @@ export default function Main({ data }) {
         updatedCategories.push("All");
       }
       setCategories(updatedCategories);
+      setFilteredEvents(
+        allEvents.filter((event) =>
+          updatedCategories.some((c) => event.category.name === c),
+        ),
+      );
     }
   };
-
-  const filteredEvents = events.filter((event) =>
-    categories.includes("All")
-      ? true
-      : categories.some((category) => event.category.name === category),
-  );
 
   const allCategories = [
     "All",
@@ -93,7 +108,7 @@ export default function Main({ data }) {
             ) : (
               <p>Loading events...</p>
             )}
-            {filtersMenu && <FiltersMenu />}
+            {filtersMenu && <FiltersMenu allEvents={allEvents} />}
           </>
         )}
         <iframe
@@ -102,7 +117,7 @@ export default function Main({ data }) {
           frameBorder="0"
           width="100%"
           height="675"
-        ></iframe>
+        />
       </section>
     </>
   );

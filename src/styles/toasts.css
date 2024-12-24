@@ -1,6 +1,6 @@
 .toast {
   text-align: center;
-  color: white;
+  color: var(--text);
   padding: 10px 20px;
   border-radius: 5px;
   font-weight: 600;
@@ -21,7 +21,7 @@
 }
 
 .toast.success:hover {
-  background: #8b9cfd;
+  background: var(--coverflow-dark);
 }
 
 .toast .close {

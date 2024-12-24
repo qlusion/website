@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -26,6 +26,7 @@ model ClubEvent {
   location    String
   day         String
   time        String
+  audience    Audience     @default(students)
   startHour   Int?
   startMinute Int?
   startPeriod AMPM?
@@ -65,4 +66,11 @@ enum Frequency {
 enum AMPM {
   AM
   PM
+}
+
+enum Audience {
+  students
+  faculty
+  athletics
+  community
 }

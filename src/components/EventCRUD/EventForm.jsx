@@ -19,10 +19,12 @@ const fields = [
   "categoryId",
   "day",
   "time",
+  // "time-new",
   "location",
+  "audience",
   "picture",
-  "startDate",
-  "repeating",
+  // "startDate",
+  // "repeating",
 ];
 
 const getDataFromForm = async (formData) => {
@@ -54,7 +56,7 @@ const getDataFromForm = async (formData) => {
     } else if (field === "categoryId") {
       throwIfMissingField(value, field);
       data[field] = value || "cm1quiavf0000k693uihmt6w0";
-    } else if (field === "time") {
+    } else if (field === "time-new") {
       const fields = [
         "startHour",
         "startMinute",
@@ -254,7 +256,7 @@ const EventForm = async ({ event }) => {
                   </select>
                 </label>
               );
-            case "time":
+            case "time-new":
               return (
                 <div key={field} className="time">
                   <TimeParts event={event} type={"start"} title="Time Start:" />
@@ -293,6 +295,25 @@ const EventForm = async ({ event }) => {
                   key={field}
                 />
               );
+            case "audience":
+              return (
+                <label key={field}>
+                  Audience:
+                  <select
+                    required={true}
+                    name={field}
+                    defaultValue={event?.audience}
+                  >
+                    <option value="" hidden>
+                      Select an audience
+                    </option>
+                    <option value="students">Students</option>
+                    <option value="faculty">Faculty/Staff</option>
+                    <option value="athletics">Athletics</option>
+                    <option value="community">Community</option>
+                  </select>
+                </label>
+              );
             default:
               return (
                 <label key={field}>
@@ -315,7 +336,7 @@ const EventForm = async ({ event }) => {
         <p>
           Need to add an admin?{" "}
           <a
-            href={`mailto:support@qlusion.com?subject=Add%20an%20admin%20for%20event%20${event?.id}`}
+            href={`mailto:qlusion.scu@gmail.com?subject=Add%20an%20admin%20for%20event%20${event?.id}`}
           >
             Reach out
           </a>

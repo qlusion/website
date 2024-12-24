@@ -4,7 +4,7 @@ import { React, useState, useContext } from "react";
 import { AppContext } from "@/lib/Providers";
 
 export default function FiltersMenu() {
-  const { date, setDate, setMainContent, setFiltersMenu } =
+  const { date, setDate, setMainContent, setFiltersMenu, setAudience } =
     useContext(AppContext);
   const currentDate = date;
   const currentYear = currentDate.getFullYear();
@@ -125,7 +125,22 @@ export default function FiltersMenu() {
     <aside className="container filters">
       <h3>Sort Events</h3>
       <p>Select the events you want to see</p>
+      <label className="h4">
+        Audience
+        <select
+          onChange={(e) => {
+            setAudience(e.target.value);
+          }}
+        >
+          <option value="all">Any</option>
+          <option value="students">Students</option>
+          <option value="faculty">Faculty/Staff</option>
+          <option value="athletics">Athletics</option>
+          <option value="community">Community</option>
+        </select>
+      </label>
       <form method="POST" id="calendarForm">
+        <h4>Date</h4>
         <select
           aria-label="month"
           name="month"

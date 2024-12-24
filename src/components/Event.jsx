@@ -9,6 +9,7 @@ import {
   faCircleInfo,
   faClock,
   faLocationArrow,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "@/lib/Providers";
 import Link from "next/link";
@@ -39,6 +40,12 @@ export default function Event({ event }) {
           <li>
             <FontAwesomeIcon icon={faLocationArrow} fixedWidth />
             {event.location}
+          </li>
+        )}
+        {event.audience && (
+          <li>
+            <FontAwesomeIcon icon={faUsers} fixedWidth />
+            {event.audience === "faculty" ? "Faculty/Staff" : event.audience}
           </li>
         )}
         {event.admins.length && (
